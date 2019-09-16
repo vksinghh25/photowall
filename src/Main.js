@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Title from './Title.js';
 import PhotoWall from './PhotoWall.js';
 import AddPhoto from './AddPhoto.js';
+import { Route } from 'react-router-dom';
 
 class Main extends Component {
   constructor() {
@@ -12,7 +13,6 @@ class Main extends Component {
       screen: 'photos'    // photos, addPhotos
     }
     this.removePhoto = this.removePhoto.bind(this);
-    this.navigate = this.navigate.bind(this);
   }
 
   removePhoto(postRemoved) {
@@ -32,31 +32,22 @@ class Main extends Component {
     console.log("componentDidUpdate");
   }
 
-  navigate() {
-    this.setState({
-      screen: 'addPhotos'
-    });
-  }
-
   render() {
     console.log("render");
     return(
       <div>
-        {
-          this.state.screen === 'photos' && (
-            <div>
-              <Title/>
-              <PhotoWall posts={this.state.posts} onRemovePhoto={this.removePhoto} onNavigate={this.navigate}/>
-            </div>
-          )
-        }
-        {
-          this.state.screen === 'addPhotos' && (
-            <div>
-              <AddPhoto/>
-            </div>
-          )
-        }
+            <Route exact path="/" render={() => (
+              <div>
+                <Title/>
+                <PhotoWall posts={this.state.posts} onRemovePhoto={this.removePhoto} onNavigate={this.navigate}/>
+              </div>
+            )}/>
+
+            <Route exact path="/addPhoto" render={() => (
+              <div>
+                <AddPhoto/>
+              </div>
+            )}/>
       </div>
     )
   }
