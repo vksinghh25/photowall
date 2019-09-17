@@ -9,26 +9,31 @@ class Main extends Component {
     console.log("contructor");
     super();
     this.state = {
-      posts: [],
+      posts: [],          // initially the list of posts is empty
       screen: 'photos'    // photos, addPhotos
     }
+
+    // when these methods get called, they lose the binding of 'this' to the object
     this.removePhoto = this.removePhoto.bind(this);
     this.addPhoto = this.addPhoto.bind(this);
   }
 
   removePhoto(postRemoved) {
-    console.log(postRemoved.description);
-    this.setState({posts: this.state.posts.filter(post => post !== postRemoved)});
+    console.log("Post Removed");
+    this.setState({ posts: this.state.posts.filter(post => post !== postRemoved) });
   }
 
   addPhoto(postAdded) {
     console.log("Adding Post");
-    this.setState({posts: this.state.posts.concat(postAdded)});
+    this.setState({ posts: this.state.posts.concat(postAdded) });
   }
 
+  // once the component has been put into the  DOM
   componentDidMount() {
     console.log("componentDidMount");
     const data = this.simulateFetchPosts();
+
+    // set the state and the Main component will re-render, this time with posts
     this.setState({
       posts: data
     });
@@ -42,13 +47,15 @@ class Main extends Component {
     console.log("render");
     return(
       <div>
+            {/* when the path is "/", then render the following components */}
             <Route exact path="/" render={() => (
               <div>
                 <Title/>
-                <PhotoWall posts={this.state.posts} onRemovePhoto={this.removePhoto} onNavigate={this.navigate}/>
+                {/* pass reference to the removePhoto methods to the PhotoWall component */}
+                <PhotoWall posts={this.state.posts} onRemovePhoto={this.removePhoto}/>
               </div>
             )}/>
-
+            {/* when the path is "/addPhoto", then render the following components */}
             <Route exact path="/addPhoto" render={({history}) => (
               <div>
                 <AddPhoto onAddPhoto={(addedPost) =>  {
@@ -61,6 +68,7 @@ class Main extends Component {
     )
   }
 
+  // simple method to simulate fetching of posts over a DB connection
   simulateFetchPosts() {
     return [{
         id: "0",

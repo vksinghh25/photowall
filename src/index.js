@@ -6,4 +6,5 @@ import './styles/stylesheet.css';
 import { BrowserRouter } from 'react-router-dom';
 
 // BrowserRouter makes sure our app is aware of the URLs being hit
+// wrap the entire thing inside a BrowserRouter
 ReactDOM.render(<BrowserRouter><Main/></BrowserRouter>, document.getElementById('root'));

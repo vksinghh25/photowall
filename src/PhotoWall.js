@@ -5,10 +5,12 @@ import { Link } from 'react-router-dom';
 class PhotoWall extends Component {
   render() {
     return <div>
+            {/* the Link component is used to specify something that upon clicking takes us to a different path */}
+            {/* the path is metioned inside the 'to' attribute */}
             <Link className="addIcon" to="/addPhoto"> </Link>
-            <div className="photoGrid">
-            {this.props.posts.map((post, index) => <Photo key={index} post={post} onRemovePhoto={this.props.onRemovePhoto}/>)}
-            </div>
+              <div className="photoGrid">
+                { this.props.posts.map((post, index) => <Photo key={index} post={post} onRemovePhoto={this.props.onRemovePhoto}/>) }
+              </div>
           </div>
   }
 }
