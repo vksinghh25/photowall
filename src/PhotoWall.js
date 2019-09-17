@@ -9,7 +9,14 @@ class PhotoWall extends Component {
             {/* the path is metioned inside the 'to' attribute */}
             <Link className="addIcon" to="/addPhoto"> </Link>
               <div className="photoGrid">
-                { this.props.posts.map((post, index) => <Photo key={index} post={post} onRemovePhoto={this.props.onRemovePhoto}/>) }
+                { this.props.posts
+                  .sort(function(x, y) {
+                    return y.id - x.id
+                  })
+                  .map((post, index) => {
+                    console.log(post.id);
+                    return <Photo key={index} post={post} onRemovePhoto={this.props.onRemovePhoto}/>;
+                  }) }
               </div>
           </div>
   }
